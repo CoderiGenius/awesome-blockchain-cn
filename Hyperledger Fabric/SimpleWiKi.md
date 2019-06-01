@@ -1,4 +1,4 @@
-### fabric概念简单解释
+### fabric 备忘笔记
 #### Fabric的节点
 Fabric的节点和人们通常熟知的比特币、以太坊有着较大的区别，主要表现在以下层面：
 - 1、  众所周知，比特币、以太坊这种公有链上的节点只有两种，全节点（全部区块的历史数据）和轻节点（只和自己有关的数据），每个角色间是平等的，不含特殊功能。而Fabric的角色成员至少分为三种：主节点、背书节点、记账节点和排序节点。其中主节点、背书节点、记账节点属于组织内节点，排序节点属于组织外节点。Fabric的节点扮演的是不同的角色。
@@ -57,4 +57,29 @@ Fabric的架构包括四种：
     - 3、  验证数字证书时：先用CA的公钥解密密文F’，得到一个哈希值h2。再用证书明文F计算一次SHA256，得到密文h1。将h1和h2的值对比。如果相等，则证书校验通过，说明该客户端持有的是CA颁发的证书。
 #### 未来展望
 - Fabric功能强大，是目前企业级区块链的事实标准和主流框架。在后续发展中，Fabric还将持续迭代，比如引入PBFT的共识算法，取代Kafka的Order排序；引入Kubernetes管理日渐增长的链码容器；当联盟有新成员加入时，MSP可以动态更新进而认证新的证书等等。随着这些功能的补充，Fabric在商业区块链领域一枝独秀的地位将更加牢固。
+
+#### fabric新版本特性
+##### 1.1
+- Fabric CA的CRL
+- 区块以及交易的事件推送
+- 增加了所有组建间的双向TLS通信
+- Node.js Chaincode链码的支持
+- Chaincode API新增了creator identity
+- 性能相对v1.0有了明显的提升
+##### 1.2
+- Private Data Collections：这个特性不得不说在隐私保护上解决了不少项目的痛点，也减少了许多项目为了隐私保护在业务层做的复杂设计。
+- Service Discovery：服务发现这个特性，使得客户端拥有了更多的灵活性和可操作性，可以动态感知整个Fabric网络的变化。
+- Pluggable endorsement and validation：可插拔的背书及校验机制，采用了Go Plugin机制来实现，避免了之前需要重新编译源代码的操作，提升了灵活性。Fabric v1.3中，同样增加了十分有用的feature：基于Identity Mixer的MSP Implementation：基于零知识证明实现的身份的匿名和不可链接，这个feature替代了v0.6版本中的T-cert。
+- key-level endorsement policies：更细粒度的背书策略，细化到具体的key-value，更加灵活，不仅限于一个链码程序作背书。
+- 新增Java Chaincode：至此，v1.3之后支持了Go、Node.js、Java 三种Chaincode，为开发者提供了更多的选择。
+- Peer channel-based event services：Channel级别的事件订阅机制，早在v1.1版本中已经亮相了，在v1.3版本中正式发布，至此，旧的Event Hub正式宣告弃用。
+##### Fabric v1.4是一个里程碑式的版本，是首个LTS的版本（Long Term Support的版本）：
+- 可操作性和可维护性的提升：
+- 开放日志级别设置的接口
+- 开放节点健康状态的检查接口
+- 开放节点数据指标的收集接口
+- 改进了Node SDK的编程模型，简化开发者的代码复杂度，使得SDK更加易用
+- Private Data的增强：
+    - 对于后续添加的允许访问节点能够获取之前的隐私数据
+    - 添加客户端层面的隐私数据的权限控制，不需要添加链码逻辑。
 
